@@ -4,6 +4,10 @@
 
 {% block body %}
 
-    <h2 class="text-center text-2xl font-semibold mx-5 text-black">{{ title }}</h2>
+    <h2 class="text-center text-2xl font-semibold my-8 text-black">{{ title }}</h2>
+
+    <section class="w-[300px] mx-auto flex justify-center">
+        <a class="inline-block bg-slate-500 text-white text-center px-2 py-1 rounded" href="{{ path('list') }}">Voir la liste des événements</a>
+    </section>
 
 {% endblock %}
