@@ -17,4 +17,14 @@ class EventController extends AbstractController
             'title' => $title,
         ]);
     }
+
+    #[Route('/list', name: 'list')]
+    public function list(): Response
+    {
+        $events = [];
+
+        return $this->render('event/list.html.twig', [
+            'events' => $events,
+        ]);
+    }
 }
