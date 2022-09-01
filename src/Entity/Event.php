@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\EventTypeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EventTypeRepository::class)]
 class Event
@@ -15,12 +16,15 @@ class Event
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank, Assert\Length(min: 2)]
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\GreaterThanOrEqual(10), Assert\LessThanOrEqual(50)]
     private ?int $price = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -29,8 +33,12 @@ class Event
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $released_at = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $finished_at = null;
+    
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
+
 
     public function getId(): ?int
     {
@@ -105,6 +113,18 @@ class Event
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getFinishedAt(): ?\DateTimeInterface
+    {
+        return $this->finished_at;
+    }
+
+    public function setFinishedAt(\DateTimeInterface $finished_at): self
+    {
+        $this->finished_at = $finished_at;
 
         return $this;
     }
