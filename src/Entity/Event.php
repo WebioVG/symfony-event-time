@@ -24,7 +24,7 @@ class Event
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]
-    #[Assert\GreaterThanOrEqual(10), Assert\LessThanOrEqual(50)]
+    #[Assert\GreaterThanOrEqual(10000), Assert\LessThanOrEqual(50000)]
     private ?int $price = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
