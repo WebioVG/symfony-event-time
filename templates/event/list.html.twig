@@ -4,10 +4,22 @@
 
 {% block body %}
 
-    <h2 class="text-center">Evénements</h2>
+    <h2 class="text-center text-2xl font-semibold my-8 text-black">Evénements</h2>
 
-    {% for event in events %}
-        <p>{{ event.name }}</p>
-    {% endfor %}
+    <section class="grid grid-cols-4 max-w-[1200px] mx-auto gap-8">
+        {% for event in events %}
+            <article class="drop-shadow-lg bg-white p-3 border">
+                <h3 class="font-semibold text-2xl mb-1">{{ event.name }}</h3>
+                <p class="text-sm text-gray-500 text-justify mb-5">{{ event.description }}</p>
+                <p class="mb-5">
+                    Du {{ event.releasedAt|date('d/m/Y') }} à {{ event.releasedAt|date('h') }}h{{ event.releasedAt|date('m') }} au {{ event.finishedAt|date('d/m/Y') }} à {{ event.finishedAt|date('h') }}h{{ event.finishedAt|date('m') }}
+                </p>
+                <div>
+                    <a class="bg-blue-500 text-white px-2 py-1 duration-500 rounded hover:bg-blue-600" href="#">Voir</a>
+                    <span>Tags</span>
+                </div>
+            </article>
+        {% endfor %}
+    </section>
 
 {% endblock %}
