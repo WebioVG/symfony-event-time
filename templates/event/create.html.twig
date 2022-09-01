@@ -5,5 +5,10 @@
 {% block body %}
 
     <h2 class="text-center">Ajouter</h2>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button>Créer</button>
+    {{ form_end(form) }}
     
 {% endblock %}
