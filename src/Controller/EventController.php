@@ -33,4 +33,10 @@ class EventController extends AbstractController
     {
         return $this->render('event/create.html.twig');
     }
+
+    #[Route('/show', name: 'show')]
+    public function show(): Response
+    {
+        return $this->render('event/show.html.twig');
+    }
 }
