@@ -22,6 +22,7 @@ class AppFixtures extends Fixture
                 ->setPrice($faker->numberBetween(10000, 15000))
                 ->setCreatedAt($faker->dateTimeBetween('now', 'now'))
                 ->setReleasedAt($faker->dateTimeBetween('now', '+4 week'))
+                ->setFinishedAt($faker->dateTimeBetween('+4 week', '+2 month'))
                 ->setImage((string) $faker->numberBetween(0, 3))
             ;
             $manager->persist($event);
