@@ -6,4 +6,8 @@
 
     <h2 class="text-center">Evénements</h2>
 
+    {% for event in events %}
+        <p>{{ event.name }}</p>
+    {% endfor %}
+
 {% endblock %}
