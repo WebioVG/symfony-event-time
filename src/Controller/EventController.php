@@ -27,4 +27,10 @@ class EventController extends AbstractController
             'events' => $events,
         ]);
     }
+
+    #[Route('/create', name: 'create')]
+    public function create(): Response
+    {
+        return $this->render('event/create.html.twig');
+    }
 }
