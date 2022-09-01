@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Form\EventType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -40,9 +42,23 @@ class EventController extends AbstractController
     }
 
     #[Route('/create', name: 'create')]
-    public function create(): Response
+    public function create(Request $request): Response
     {
-        return $this->render('event/create.html.twig');
+        $event = new Event();
+        $form = $this->createForm(EventType::class, $event);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($event);
+            $this->entityManager->flush();
+
+            $this->addFlash('success', 'L\'événement '.$event->getName().' a été créé !');
+            return $this->redirectToRoute('list');
+        }
+
+        return $this->render('event/create.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     #[Route('/show/{id}', name: 'show')]
