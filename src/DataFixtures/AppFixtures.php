@@ -23,7 +23,7 @@ class AppFixtures extends Fixture
                 ->setCreatedAt($faker->dateTimeBetween('now', 'now'))
                 ->setReleasedAt($faker->dateTimeBetween('now', '+4 week'))
                 ->setFinishedAt($faker->dateTimeBetween('+4 week', '+2 month'))
-                ->setImage((string) $faker->numberBetween(0, 3))
+                ->setImage('/uploads/'.$faker->numberBetween(0, 5).'.png')
             ;
             $manager->persist($event);
         }
