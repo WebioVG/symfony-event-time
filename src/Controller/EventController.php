@@ -2,12 +2,23 @@
 
 namespace App\Controller;
 
+use App\Entity\Event;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class EventController extends AbstractController
 {
+    public $doctrine;
+    public $entityManager;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+        $this->entityManager = $doctrine->getManager();
+    }
+
     #[Route('/home', name: 'home')]
     public function home(): Response
     {
@@ -21,7 +32,7 @@ class EventController extends AbstractController
     #[Route('/list', name: 'list')]
     public function list(): Response
     {
-        $events = [];
+        $events = $this->doctrine->getRepository(Event::class)->findAll();
 
         return $this->render('event/list.html.twig', [
             'events' => $events,
