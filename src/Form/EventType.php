@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Event;
+use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,7 +16,6 @@ class EventType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('price')
-            ->add('created_at')
             ->add('released_at')
             ->add('finished_at')
             ->add('image')
