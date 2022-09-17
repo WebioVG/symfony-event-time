@@ -25,16 +25,18 @@ class Event
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]
-    #[Assert\GreaterThanOrEqual(10000), Assert\LessThanOrEqual(50000)]
+    #[Assert\Range(min: 10000, max: 50000)]
     private ?int $price = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotBlank, Assert\GreaterThan('today 14:00')]
     private ?\DateTimeInterface $released_at = null;
-
+    
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotBlank, Assert\GreaterThan(propertyPath: 'released_at')]
     private ?\DateTimeInterface $finished_at = null;
     
     #[ORM\Column(length: 255, nullable: true)]
