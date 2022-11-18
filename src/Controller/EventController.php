@@ -8,17 +8,21 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 class EventController extends AbstractController
 {
     public $doctrine;
     public $entityManager;
+    public $mailer;
 
-    public function __construct(ManagerRegistry $doctrine)
+    public function __construct(ManagerRegistry $doctrine, MailerInterface $mailer)
     {
         $this->doctrine = $doctrine;
         $this->entityManager = $doctrine->getManager();
+        $this->mailer = $mailer;
     }
 
     #[Route('/home', name: 'home')]
@@ -34,7 +38,7 @@ class EventController extends AbstractController
     #[Route('/list', name: 'list')]
     public function list(): Response
     {
-        $events = $this->doctrine->getRepository(Event::class)->findAll();
+        $events = $this->doctrine->getRepository(Event::class)->findBy([], ['finished_at' => 'DESC']);
 
         return $this->render('event/list.html.twig', [
             'events' => $events,
@@ -67,5 +71,20 @@ class EventController extends AbstractController
         return $this->render('event/show.html.twig', [
             'event' => $event
         ]);
+    }
+
+    #[Route('/join/{id}', name: 'join')]
+    public function join(Event $event): Response
+    {
+        $email = (new Email())
+            ->from('test@test.fr')
+            ->to('admin@test.fr')
+            ->subject('Rejoindre l\'événement')
+            ->html('<p>Evenement: '.$event->getName().'</p>')
+        ;
+
+        $this->mailer->send($email);
+
+        return $this->redirectToRoute('home');
     }
 }
